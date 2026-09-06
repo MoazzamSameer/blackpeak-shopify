@@ -1,0 +1,45 @@
+<header class="header">
+  <div class="container header__bar">
+    <a class="header__logo" href="{{ routes.root_url }}">{{ shop.name | default: 'BLACKPEAK' | upcase }}</a>
+
+    <nav class="header__nav" aria-label="Primary">
+      {%- if section.settings.menu != blank and section.settings.menu.links.size > 0 -%}
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.root_url }}">Home</a>
+        <a href="{{ routes.all_products_collection_url }}">Shop</a>
+        <a href="/pages/contact">Contact</a>
+      {%- endif -%}
+    </nav>
+
+    <div class="header__actions">
+      {%- comment -%}
+        The Box control is a REAL link to the cart page. JavaScript upgrades it into
+        the drawer. If JS is blocked or fails, this still takes the customer to a
+        working cart with a checkout button.
+      {%- endcomment -%}
+      <a class="cart-toggle" href="{{ routes.cart_url }}" data-cart-toggle aria-label="Open your box ({{ cart.item_count }} items)">
+        Box
+        <span class="cart-toggle__count" data-cart-count {% if cart.item_count == 0 %}style="display:none"{% endif %}>{{ cart.item_count }}</span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-label="Menu">☰</button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu",
+      "info": "Online Store → Navigation. Suggested: Home, Shop, Contact."
+    }
+  ]
+}
+{% endschema %}

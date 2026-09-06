@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "about": {
+      "type": "about-content",
+      "blocks": {
+        "a1": { "type": "tile", "settings": { "title": "Made in Kashmir", "body": "Made in the valley, in small batches, by people from here. The place is the point." } },
+        "a2": { "type": "tile", "settings": { "title": "Bold by design", "body": "Big fizz, bigger personality. Green Apple crisp and loud, Mojito cool and cheeky, Watermelon big and bold." } },
+        "a3": { "type": "tile", "settings": { "title": "Built to be fun", "body": "Caffeine-free, slim-can, share-it-around fun. Made for picnics, houseboats and drives." } },
+        "a4": { "type": "tile", "settings": { "title": "Founder-run and local", "body": "Bootstrapped from J&K by a local founder who wanted Kashmir to have a soda worth bragging about." } }
+      },
+      "block_order": ["a1", "a2", "a3", "a4"],
+      "settings": {}
+    },
+    "why": {
+      "type": "why-blackpeak",
+      "blocks": {
+        "w1": { "type": "tile", "settings": { "icon": "🏔️", "title": "Made in Kashmir", "body": "Brewed and canned in the valley by a local J&K founder. The real deal, made in Kashmir." } },
+        "w2": { "type": "tile", "settings": { "title": "Three bold flavours", "body": "Green Apple, Mojito (non-alcoholic) and Watermelon. One valley, three moods." } },
+        "w3": { "type": "tile", "settings": { "title": "Caffeine-free, any-time", "body": "Caffeine-free and full of bold bubbles — for the picnic, the houseboat and the drive home." } },
+        "w4": { "type": "tile", "settings": { "title": "Slim, giftable, ready to travel", "body": "Slim 300 ml cans, and a 12-can box that ships across India." } }
+      },
+      "block_order": ["w1", "w2", "w3", "w4"],
+      "settings": {}
+    }
+  },
+  "order": ["about", "why"]
+}

@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "t1": { "type": "tile", "settings": { "kicker": "300 ML OF KASHMIR", "body": "One slim can. All valley." } },
+        "t2": { "type": "tile", "settings": { "kicker": "CAFFEINE-FREE", "body": "Bold without the buzz." } },
+        "t3": { "type": "tile", "settings": { "kicker": "3 FLAVOURS, 1 VALLEY", "body": "Green Apple, Mojito, Watermelon." } },
+        "t4": { "type": "tile", "settings": { "kicker": "BOLD FIZZ", "body": "Fizz that means it." } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,60 @@
+<section class="section faq">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="h2 display">{{ section.settings.title }}</h2>
+      <p class="lede">{{ section.settings.lede }}</p>
+    </div>
+
+    <div class="faq__list">
+      {%- for block in section.blocks -%}
+        <details class="faq__item" {{ block.shopify_attributes }}{% if forloop.first %} open{% endif %}>
+          <summary class="faq__q">{{ block.settings.q }}</summary>
+          <div class="faq__a">{{ block.settings.a }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <p class="text-center mt-2">
+        <a class="btn btn--saffron btn--lg" href="{{ section.settings.cta_url | default: '#build' }}">{{ section.settings.cta_text }}</a>
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FAQ" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Questions? The valley's got answers." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Everything you want to know about Kashmir's own soda — flavours, fizz, shipping and gifting." },
+    { "type": "text", "id": "cta_text", "label": "CTA", "default": "Build my box" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "qa", "name": "Question",
+      "settings": [
+        { "type": "text", "id": "q", "label": "Question" },
+        { "type": "richtext", "id": "a", "label": "Answer" }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        { "type": "qa", "settings": { "q": "What is BlackPeak?", "a": "<p>Kashmir's own craft soda — bold flavour, bold fizz, made in Kashmir. Three flavours, 300 ml slim cans, caffeine-free. Bootstrapped and built in the valley by a local founder.</p>" } },
+        { "type": "qa", "settings": { "q": "What are the three flavours?", "a": "<p>Green Apple — crisp and loud. Mojito — cool and cheeky (non-alcoholic). Watermelon — big and bold. Green Apple for the picnic, Mojito for the houseboat, Watermelon for the drive. Can't pick? Build a box with all three.</p>" } },
+        { "type": "qa", "settings": { "q": "Is BlackPeak caffeine-free?", "a": "<p>Yes — all three flavours are caffeine-free. Order it morning, noon, or late on the shikara. The only buzz here is the fizz.</p>" } },
+        { "type": "qa", "settings": { "q": "Is the Mojito alcoholic?", "a": "<p>Nope. Our Mojito is non-alcoholic — all the cool, cheeky mint-and-lime fun, zero alcohol.</p>" } },
+        { "type": "qa", "settings": { "q": "Where do you deliver?", "a": "<p>We ship across India — whether you're in Srinagar or sending a box to family three states away. Tourists: order before you leave and take Kashmir home. Made in small batches in Kashmir, packed and posted with care.</p>" } },
+        { "type": "qa", "settings": { "q": "How do the multipacks work?", "a": "<p>Two ways to buy: a 12-can box of a single flavour at ₹600, or Build-Your-Own at ₹660 — mix Green Apple, Mojito and Watermelon across 12 cans, or tap 'All 3, evenly' or 'Surprise me'. Ships across India.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

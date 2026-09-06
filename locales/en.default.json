@@ -1,0 +1,41 @@
+{
+  "general": {
+    "cart": {
+      "title": "Your box",
+      "empty": "Your box is empty. Kashmir's waiting.",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "keep_shopping": "Keep shopping",
+      "remove": "Remove"
+    },
+    "newsletter": {
+      "button": "Join the valley",
+      "placeholder": "you@email.com",
+      "success": "Welcome to the valley — check your inbox."
+    },
+    "search": {
+      "title": "Search",
+      "placeholder": "Search the valley",
+      "no_results": "No results. Try another flavour."
+    },
+    "404": {
+      "title": "Lost in the valley.",
+      "body": "That page rolled off the shikara. Try the flavours instead.",
+      "link": "Back to the shop"
+    },
+    "pagination": { "previous": "Previous", "next": "Next" }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to box",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "quantity": "Quantity"
+    }
+  },
+  "blogs": { "article": { "read_more": "Read more" } },
+  "customer": {
+    "account": { "title": "Account" },
+    "login": { "title": "Login" }
+  }
+}

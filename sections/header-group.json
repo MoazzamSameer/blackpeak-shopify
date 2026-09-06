@@ -1,0 +1,19 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "announcement": {
+      "type": "announcement",
+      "blocks": {
+        "m1": { "type": "message", "settings": { "text": "Made in Kashmir. Three bold flavours, one valley." } },
+        "m2": { "type": "message", "settings": { "text": "Full fizz. Green Apple, Mojito, Watermelon." } },
+        "m3": { "type": "message", "settings": { "text": "Gift-ready: the ₹600 12-can box ships nationwide." } },
+        "m4": { "type": "message", "settings": { "text": "Build your own 12-can box." } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4"],
+      "settings": {}
+    },
+    "header": { "type": "header", "settings": {} }
+  },
+  "order": ["announcement", "header"]
+}

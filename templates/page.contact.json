@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "contact": {
+      "type": "contact-content",
+      "blocks": {
+        "c1": { "type": "item", "settings": { "title": "Stock BlackPeak", "body": "We supply retailers and distributors across Jammu & Kashmir. Send your outlet name, location and rough monthly volume, and we'll come back with rates.", "email": "info@blackpeak.quest", "phone": "+91 7006170478" } },
+        "c2": { "type": "item", "settings": { "title": "Everything else", "body": "Questions, feedback, a can that didn't taste right. Write to us.", "email": "contact@blackpeak.quest" } },
+        "c3": { "type": "item", "settings": { "title": "Press and partnerships", "email": "moazzam@blackpeak.quest" } },
+        "c4": { "type": "item", "settings": { "title": "Registered office", "lines": "BlackPeak Beverages Private Limited\nSrinagar, Jammu & Kashmir\nMon–Sat, 9am–5pm" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": {}
+    }
+  },
+  "order": ["contact"]
+}

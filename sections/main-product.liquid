@@ -1,0 +1,118 @@
+{%- assign v = product.selected_or_first_available_variant -%}
+
+<section class="section pdp">
+  <div class="container">
+    <nav class="pdp__breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a> ·
+      <a href="{{ routes.all_products_collection_url }}">Shop</a> ·
+      <span>{{ product.title }}</span>
+    </nav>
+
+    <div class="pdp__grid">
+      <div class="pdp__media">
+        {%- if product.featured_image != blank -%}
+          <img class="pdp__gallery" src="{{ product.featured_image | image_url: width: 1000 }}"
+               alt="{{ product.featured_image.alt | default: product.title | escape }}"
+               width="1000" height="{{ 1000 | divided_by: product.featured_image.aspect_ratio | round }}" loading="eager">
+        {%- else -%}
+          <img class="pdp__gallery" src="{{ 'can-green-apple.png' | asset_url }}" alt="{{ product.title | escape }}" width="821" height="1100">
+        {%- endif -%}
+      </div>
+
+      <div>
+        <h1 class="h1 display">{{ product.title }}</h1>
+        <div class="pdp__price">{{ product.price | money }}</div>
+
+        {%- if product.description != blank -%}
+          <div class="lede">{{ product.description }}</div>
+        {%- endif -%}
+
+        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-product-form>
+          {%- if product.variants.size > 1 -%}
+            <label class="is-hidden" for="VariantSelect">Variant</label>
+            <select id="VariantSelect" name="id" class="pack-opt">
+              {%- for variant in product.variants -%}
+                <option value="{{ variant.id }}" {% if variant == v %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>
+                  {{ variant.title }} — {{ variant.price | money }}
+                </option>
+              {%- endfor -%}
+            </select>
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ v.id }}">
+          {%- endif -%}
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="btn btn--saffron btn--block btn--lg" {% unless v.available %}disabled{% endunless %}>
+            {% if v.available %}Add to box{% else %}Sold out{% endif %}
+          </button>
+        </form>
+
+        <ul class="pdp__trust">
+          <li>✓ Made in Kashmir</li>
+          <li>✓ Caffeine-free</li>
+          <li>✓ Ships across India</li>
+          <li>✓ Secure checkout</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pdp__tiles">
+      {%- for block in section.blocks -%}
+        <div class="feature-card" {{ block.shopify_attributes }}>
+          <p class="kicker">{{ block.settings.kicker }}</p>
+          <p>{{ block.settings.body }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="pdp__packs">
+      <a class="gift__tile" href="{{ section.settings.byo_url | default: '/#build' }}">
+        <strong>Missing a flavour? Build a box</strong>
+        <span class="muted">Mix all three into a 12-can box.</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="sticky-atc">
+  <div>
+    <div class="sticky-atc__name">{{ product.title }}</div>
+    <div class="sticky-atc__price">{{ product.price | money }}</div>
+  </div>
+  <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-product-form>
+    <input type="hidden" name="id" value="{{ v.id }}">
+    <input type="hidden" name="quantity" value="1">
+    <button type="submit" class="btn btn--saffron" {% unless v.available %}disabled{% endunless %}>
+      {% if v.available %}Add to box{% else %}Sold out{% endif %}
+    </button>
+  </form>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "url", "id": "byo_url", "label": "Build-your-own link" }
+  ],
+  "blocks": [
+    {
+      "type": "tile", "name": "Feature tile",
+      "settings": [
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "300 ML OF KASHMIR" },
+        { "type": "text", "id": "body", "label": "Body", "default": "One slim can. All valley." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Product",
+      "blocks": [
+        { "type": "tile", "settings": { "kicker": "300 ML OF KASHMIR", "body": "One slim can. All valley." } },
+        { "type": "tile", "settings": { "kicker": "CAFFEINE-FREE", "body": "Bold without the buzz." } },
+        { "type": "tile", "settings": { "kicker": "3 FLAVOURS, 1 VALLEY", "body": "Green Apple, Mojito, Watermelon." } },
+        { "type": "tile", "settings": { "kicker": "BOLD FIZZ", "body": "Fizz that means it." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

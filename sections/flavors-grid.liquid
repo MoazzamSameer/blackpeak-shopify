@@ -1,0 +1,102 @@
+<section class="section flavors" id="flavours">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="h2 display">{{ section.settings.title }}</h2>
+      <p class="lede">{{ section.settings.lede }}</p>
+    </div>
+
+    <div class="flavors__grid">
+      {%- for block in section.blocks -%}
+        {%- assign p = block.settings.product -%}
+        <article class="flavor-card theme-{{ block.settings.theme }} reveal" {{ block.shopify_attributes }}>
+          {%- if block.settings.tag != blank -%}
+            <span class="flavor-card__tag">{{ block.settings.tag }}</span>
+          {%- endif -%}
+
+          <a class="flavor-card__can" href="{% if p != blank %}{{ p.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">
+            {%- if p != blank and p.featured_image != blank -%}
+              <img src="{{ p.featured_image | image_url: width: 600 }}" alt="{{ p.title | escape }}"
+                   width="600" height="{{ 600 | divided_by: p.featured_image.aspect_ratio | round }}" loading="lazy">
+            {%- else -%}
+              <img src="{{ block.settings.fallback_image | asset_url }}" alt="{{ block.settings.name | escape }}"
+                   width="600" height="804" loading="lazy">
+            {%- endif -%}
+          </a>
+
+          <h3 class="flavor-card__name">{% if p != blank %}{{ p.title }}{% else %}{{ block.settings.name }}{% endif %}</h3>
+          <p class="flavor-card__desc">{{ block.settings.desc }}</p>
+
+          {%- if p != blank -%}
+            {%- assign v = p.selected_or_first_available_variant -%}
+            <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-product-form>
+              <input type="hidden" name="id" value="{{ v.id }}">
+              <input type="hidden" name="quantity" value="1">
+              <button type="submit" class="btn btn--accent btn--block" {% unless v.available %}disabled{% endunless %}>
+                {%- if v.available -%}
+                  Add · {{ p.price | money }}
+                {%- else -%}
+                  Sold out
+                {%- endif -%}
+              </button>
+            </form>
+            <a class="btn btn--ghost btn--block" href="{{ p.url }}" style="margin-top:8px">Shop</a>
+          {%- else -%}
+            <p class="muted">Connect a product in the theme editor.</p>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.foot_text != blank -%}
+      <p class="text-center mt-2">
+        <a class="btn btn--ghost" href="{{ section.settings.foot_url | default: '#build' }}">{{ section.settings.foot_text }}</a>
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Flavours grid",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The lineup" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Three flavours. One valley." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Kashmir's own soda, in 300 ml slim cans. Pick your favourite, or grab all three." },
+    { "type": "text", "id": "foot_text", "label": "Footer link text", "default": "Can't choose? Build your box" },
+    { "type": "url", "id": "foot_url", "label": "Footer link URL" }
+  ],
+  "blocks": [
+    {
+      "type": "flavour",
+      "name": "Flavour",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "name", "label": "Fallback name", "default": "Green Apple 12 PACK" },
+        { "type": "text", "id": "desc", "label": "Tagline", "default": "Crisp & loud" },
+        { "type": "text", "id": "tag", "label": "Corner tag" },
+        {
+          "type": "select", "id": "theme", "label": "Colour theme", "default": "apple",
+          "options": [
+            { "value": "apple", "label": "Green Apple" },
+            { "value": "mojito", "label": "Mojito" },
+            { "value": "watermelon", "label": "Watermelon" }
+          ]
+        },
+        { "type": "text", "id": "fallback_image", "label": "Fallback image asset", "default": "can-green-apple.png" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Flavours grid",
+      "blocks": [
+        { "type": "flavour", "settings": { "name": "Green Apple 12 PACK", "desc": "Crisp & loud", "theme": "apple", "fallback_image": "can-green-apple.png" } },
+        { "type": "flavour", "settings": { "name": "Mojito 12 Pack", "desc": "Cool & cheeky", "tag": "Non-alcoholic", "theme": "mojito", "fallback_image": "can-mojito.png" } },
+        { "type": "flavour", "settings": { "name": "Watermelon 12 PACK", "desc": "Big & bold", "theme": "watermelon", "fallback_image": "can-watermelon.png" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

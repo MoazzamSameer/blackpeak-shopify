@@ -1,0 +1,71 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div>
+        <div class="footer__brand">{{ shop.name | default: 'BLACKPEAK' | upcase }}</div>
+        <p class="muted">{{ section.settings.blurb }}</p>
+        <div class="footer__social">
+          {%- if section.settings.instagram != blank -%}
+            <a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram</a>
+          {%- endif -%}
+          {%- if section.settings.facebook != blank -%}
+            <a href="{{ section.settings.facebook }}" target="_blank" rel="noopener">Facebook</a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="{{ routes.all_products_collection_url }}">All Flavours</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Brand</h4>
+        <ul>
+          <li><a href="/pages/about-us">About Us</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          {%- if shop.privacy_policy != blank -%}<li><a href="{{ shop.privacy_policy.url }}">Privacy Policy</a></li>{%- endif -%}
+          {%- if shop.refund_policy != blank -%}<li><a href="{{ shop.refund_policy.url }}">Refund Policy</a></li>{%- endif -%}
+          {%- if shop.shipping_policy != blank -%}<li><a href="{{ shop.shipping_policy.url }}">Shipping Policy</a></li>{%- endif -%}
+          {%- if shop.terms_of_service != blank -%}<li><a href="{{ shop.terms_of_service.url }}">Terms of Service</a></li>{%- endif -%}
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Help</h4>
+        <ul>
+          <li><a href="{{ routes.account_url }}">Orders</a></li>
+          <li><a href="{{ routes.account_url }}">Profile</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© {{ 'now' | date: '%Y' }} {{ shop.name }}. Kashmir. Bold. Fun.</span>
+      <span>{{ section.settings.origin }}</span>
+    </div>
+
+    <p class="footer__fine">{{ section.settings.disclaimer }}</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "textarea", "id": "blurb", "label": "Brand blurb", "default": "Built in the valley by a local J&K founders, in small batches. Green Apple, Mojito, Watermelon." },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "facebook", "label": "Facebook URL" },
+    { "type": "text", "id": "origin", "label": "Origin line", "default": "Product of India" },
+    { "type": "textarea", "id": "disclaimer", "label": "Legal disclaimer", "default": "BlackPeak is a carbonated soft drink (non-alcoholic). Contains added sugar, permitted food colours and class II preservative. Not a substitute for water. Made in Kashmir, India. Best enjoyed chilled." }
+  ]
+}
+{% endschema %}

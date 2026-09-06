@@ -1,0 +1,62 @@
+<section class="section section--sand2 why">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="h2 display">{{ section.settings.title }}</h2>
+      <p class="lede">{{ section.settings.lede }}</p>
+    </div>
+
+    <div class="why__grid">
+      {%- for block in section.blocks -%}
+        <div class="why-tile reveal" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <div class="why-tile__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+          {%- endif -%}
+          <h3 class="why-tile__kicker">{{ block.settings.title }}</h3>
+          <p class="muted">{{ block.settings.body }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <p class="text-center mt-2">
+        <a class="btn btn--saffron btn--lg" href="{{ section.settings.cta_url | default: '#build' }}">{{ section.settings.cta_text }}</a>
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Why BlackPeak",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why BlackPeak" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Made in Kashmir. Built to be fun." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Bold flavour, bold fizz, and a whole valley behind every can." },
+    { "type": "text", "id": "cta_text", "label": "CTA", "default": "Build my box" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "tile", "name": "Tile",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Made in Kashmir" },
+        { "type": "textarea", "id": "body", "label": "Body" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Why BlackPeak",
+      "blocks": [
+        { "type": "tile", "settings": { "icon": "🏔️", "title": "Made in Kashmir", "body": "Brewed and canned in the valley by a local J&K founder. Not 'inspired by' Kashmir — made in it. A taste of home for the diaspora, a souvenir you can sip for everyone visiting." } },
+        { "type": "tile", "settings": { "title": "Three bold flavours", "body": "Green Apple that's crisp and loud. Mojito that's cool and cheeky (and non-alcoholic). Watermelon that's big and summer-bright. One valley, three moods." } },
+        { "type": "tile", "settings": { "title": "Caffeine-free, any-time", "body": "Caffeine-free and full of bold bubbles — made for the picnic at noon, the houseboat at sunset, and the long drive home." } },
+        { "type": "tile", "settings": { "title": "Slim, giftable, ready to travel", "body": "300 ml slim cans that slide into a cooler, a bag, or a gift box. The 12-can box ships across India as a taste of Kashmir." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

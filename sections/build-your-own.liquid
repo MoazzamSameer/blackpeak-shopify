@@ -1,0 +1,95 @@
+{%- comment -%}
+  Build Your Own 12-can box.
+  Commerce model: ONE Shopify product at a fixed price (₹660). The customer's chosen
+  mix is carried as a line item property ("Your mix": "Green Apple × 5, Mojito × 4, …"),
+  because individual cans are not sold as products.
+{%- endcomment -%}
+{%- assign byo = section.settings.byo_product -%}
+{%- assign v = byo.selected_or_first_available_variant -%}
+
+<section class="section byo" id="build">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="h2 display">{{ section.settings.title }}</h2>
+      <p class="lede">{{ section.settings.lede }}</p>
+    </div>
+
+    {%- if byo != blank and v != blank -%}
+      <div class="byo__grid"
+           data-byo
+           data-byo-max="{{ section.settings.pack_size }}"
+           data-byo-variant="{{ v.id }}"
+           data-byo-price="{{ byo.price }}">
+
+        <div class="byo__panel">
+          <div class="byo__rows">
+            {%- render 'byo-row', product: section.settings.p1, name: section.settings.n1, theme: 'apple', fallback: 'can-green-apple.png' -%}
+            {%- render 'byo-row', product: section.settings.p2, name: section.settings.n2, theme: 'mojito', fallback: 'can-mojito.png' -%}
+            {%- render 'byo-row', product: section.settings.p3, name: section.settings.n3, theme: 'watermelon', fallback: 'can-watermelon.png' -%}
+          </div>
+
+          <div class="byo__presets">
+            <button class="btn btn--ghost" type="button" data-byo-even>All 3, evenly</button>
+            <button class="btn btn--ghost" type="button" data-byo-surprise>Surprise me</button>
+            <button class="btn btn--ghost" type="button" data-byo-reset>Clear</button>
+          </div>
+        </div>
+
+        <aside class="byo__panel">
+          <div class="byo__count" data-byo-count aria-live="polite">0 / {{ section.settings.pack_size }}</div>
+          <div class="byo__bar"><i data-byo-bar style="width:0%"></i></div>
+          <p class="byo__hint" data-byo-hint>Pick {{ section.settings.pack_size }} cans — mix all three.</p>
+
+          <div class="byo__price">
+            <span>Your box</span>
+            <strong data-byo-price-out>{{ 0 | money }}</strong>
+          </div>
+
+          <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-byo-form>
+            <input type="hidden" name="id" value="{{ v.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <input type="hidden" name="properties[Your mix]" value="" data-byo-mix>
+            <button type="submit" class="btn btn--saffron btn--block btn--lg" data-byo-add disabled>
+              Pick {{ section.settings.pack_size }} more
+            </button>
+          </form>
+
+          <p class="muted mt-2">{{ section.settings.note }}</p>
+        </aside>
+      </div>
+    {%- else -%}
+      <div class="byo__empty">
+        <p><strong>Build-your-own isn’t connected yet.</strong></p>
+        <p class="muted">
+          Create a product called “Build Your Own 12-Can Box” priced at ₹660 in Shopify admin,
+          then select it in this section’s settings in the theme editor.
+        </p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Build your own box",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Mix & match" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Build your own box. Mix all three." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Pick 12 cans across Green Apple, Mojito and Watermelon — your valley, your way." },
+    { "type": "header", "content": "Commerce" },
+    { "type": "product", "id": "byo_product", "label": "Build-your-own product (₹660)", "info": "One fixed-price product. The mix is saved as a line item property." },
+    { "type": "range", "id": "pack_size", "label": "Cans per box", "min": 6, "max": 24, "step": 6, "default": 12 },
+    { "type": "header", "content": "Flavour rows" },
+    { "type": "product", "id": "p1", "label": "Flavour 1 product (image only)" },
+    { "type": "text", "id": "n1", "label": "Flavour 1 name", "default": "Green Apple 12 PACK" },
+    { "type": "product", "id": "p2", "label": "Flavour 2 product (image only)" },
+    { "type": "text", "id": "n2", "label": "Flavour 2 name", "default": "Mojito 12 Pack" },
+    { "type": "product", "id": "p3", "label": "Flavour 3 product (image only)" },
+    { "type": "text", "id": "n3", "label": "Flavour 3 name", "default": "Watermelon 12 PACK" },
+    { "type": "header", "content": "Footnote" },
+    { "type": "textarea", "id": "note", "label": "Note", "default": "12 cans, mix & match — best value at ₹55 a can. Ships across India." }
+  ],
+  "presets": [{ "name": "Build your own box" }]
+}
+{% endschema %}

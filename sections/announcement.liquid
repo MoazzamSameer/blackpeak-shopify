@@ -1,0 +1,36 @@
+<div class="announce" role="region" aria-label="Announcements">
+  <div class="announce__track">
+    {%- for i in (1..2) -%}
+      {%- for block in section.blocks -%}
+        <span class="announce__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Message", "default": "Made in Kashmir. Three bold flavours, one valley." }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [
+        { "type": "message", "settings": { "text": "Made in Kashmir. Three bold flavours, one valley." } },
+        { "type": "message", "settings": { "text": "Full fizz. Green Apple, Mojito, Watermelon." } },
+        { "type": "message", "settings": { "text": "Gift-ready: the ₹600 12-can box ships nationwide." } },
+        { "type": "message", "settings": { "text": "Build your own 12-can box." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

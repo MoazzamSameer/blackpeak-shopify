@@ -1,0 +1,52 @@
+<section class="section section--paper">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="h2 display">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="proof__rail">
+      {%- for block in section.blocks -%}
+        <figure class="proof-card reveal" {{ block.shopify_attributes }}>
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          {%- if block.settings.headline != blank -%}
+            <h3 class="h3">“{{ block.settings.headline }}”</h3>
+          {%- endif -%}
+          <blockquote class="proof-card__quote">{{ block.settings.quote }}</blockquote>
+          <figcaption class="proof-card__meta">{{ block.settings.author }}</figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Social proof",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Loved across the valley" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Spotted across the valley." }
+  ],
+  "blocks": [
+    {
+      "type": "review", "name": "Review",
+      "settings": [
+        { "type": "text", "id": "headline", "label": "Headline" },
+        { "type": "textarea", "id": "quote", "label": "Quote" },
+        { "type": "text", "id": "author", "label": "Author", "default": "Verified buyer" }
+      ]
+    }
+  ],
+  "max_blocks": 9,
+  "presets": [
+    {
+      "name": "Social proof",
+      "blocks": [
+        { "type": "review", "settings": { "headline": "Tastes like home in a can.", "quote": "Tastes like home in a can.", "author": "Verified buyer" } },
+        { "type": "review", "settings": { "headline": "I love the packaging", "quote": "I love the packaging. I haven’t seen designs like these ever before.", "author": "— Neha" } },
+        { "type": "review", "settings": { "headline": "Tastes better than others", "quote": "Im proud that talent like this is emerging in kashmir. I have tried all three flavours and they taste better than other brands selling mojitos, watermelon is my personal favourite.", "author": "— Seerat" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

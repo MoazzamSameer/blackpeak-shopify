@@ -1,0 +1,64 @@
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 class="h1 display">{{ section.settings.title }}</h1>
+    </div>
+
+    <div class="why__grid">
+      {%- for block in section.blocks -%}
+        <div class="feature-card reveal" {{ block.shopify_attributes }}>
+          <h3 class="h3">{{ block.settings.title }}</h3>
+          {%- if block.settings.body != blank -%}<p class="muted">{{ block.settings.body }}</p>{%- endif -%}
+          {%- if block.settings.email != blank -%}
+            <p><a href="mailto:{{ block.settings.email }}">{{ block.settings.email }}</a>
+              {%- if block.settings.phone != blank %} · <a href="tel:{{ block.settings.phone | remove: ' ' }}">{{ block.settings.phone }}</a>{% endif -%}
+            </p>
+          {%- endif -%}
+          {%- if block.settings.lines != blank -%}
+            <p class="muted">{{ block.settings.lines | newline_to_br }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.note != blank -%}
+      <p class="muted mt-2">{{ section.settings.note }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact content",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Contact" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Talk to us." },
+    { "type": "textarea", "id": "note", "label": "Footnote", "default": "We reply within two working days. If we don't, send it again." }
+  ],
+  "blocks": [
+    {
+      "type": "item", "name": "Contact block",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "body", "label": "Body" },
+        { "type": "text", "id": "email", "label": "Email" },
+        { "type": "text", "id": "phone", "label": "Phone" },
+        { "type": "textarea", "id": "lines", "label": "Address / hours (one per line)" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Contact content",
+      "blocks": [
+        { "type": "item", "settings": { "title": "Stock BlackPeak", "body": "We supply retailers and distributors across Jammu & Kashmir. Send your outlet name, location and rough monthly volume, and we'll come back with rates.", "email": "info@blackpeak.quest", "phone": "+91 7006170478" } },
+        { "type": "item", "settings": { "title": "Everything else", "body": "Questions, feedback, a can that didn't taste right. Write to us.", "email": "contact@blackpeak.quest" } },
+        { "type": "item", "settings": { "title": "Press and partnerships", "email": "moazzam@blackpeak.quest" } },
+        { "type": "item", "settings": { "title": "Registered office", "lines": "BlackPeak Beverages Private Limited\nSrinagar, Jammu & Kashmir\nMon–Sat, 9am–5pm" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

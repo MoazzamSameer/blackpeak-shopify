@@ -1,0 +1,69 @@
+<section class="section story">
+  <div class="container">
+    <div class="story__grid">
+      <div class="story__body reveal">
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+        <h2 class="h2 display">{{ section.settings.title }}</h2>
+        <p>{{ section.settings.p1 }}</p>
+        <p>{{ section.settings.p2 }}</p>
+        {%- if section.settings.cta_text != blank -%}
+          <a class="btn btn--saffron btn--lg" href="{{ section.settings.cta_url | default: '#build' }}">{{ section.settings.cta_text }}</a>
+        {%- endif -%}
+      </div>
+
+      <div class="story__media reveal">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.title | escape }}"
+               width="900" height="{{ 900 | divided_by: section.settings.image.aspect_ratio | round }}" loading="lazy">
+        {%- else -%}
+          <img src="{{ 'can-mojito.png' | asset_url }}" alt="" width="821" height="1100" loading="lazy">
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="story__tiles">
+      {%- for block in section.blocks -%}
+        <div class="feature-card reveal" {{ block.shopify_attributes }}>
+          <h3 class="h3">{{ block.settings.title }}</h3>
+          <p class="muted">{{ block.settings.body }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Our story",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our story" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Born in the valley. Bottled with attitude." },
+    { "type": "textarea", "id": "p1", "label": "Paragraph 1", "default": "We didn't start BlackPeak in a boardroom. We started it in Kashmir — the place we're from, the place we're proud of. One local founder, three loud flavours, and a simple idea: the valley deserves a soda that's actually its own." },
+    { "type": "textarea", "id": "p2", "label": "Paragraph 2", "default": "Green Apple for the picnic. Mojito for the houseboat. Watermelon for the drive. Three flavours, one valley, in a 300 ml slim can you can hold in one hand and finish with a grin. Bold flavour. Bold fizz. No apologies." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "cta_text", "label": "CTA", "default": "Build Your Box" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "tile", "name": "Story tile",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Made in Kashmir" },
+        { "type": "textarea", "id": "body", "label": "Body" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Our story",
+      "blocks": [
+        { "type": "tile", "settings": { "title": "Made in Kashmir", "body": "Made right here in the valley — small batches, big flavour. This isn't soda that visits Kashmir. It's from it." } },
+        { "type": "tile", "settings": { "title": "One local founder", "body": "Bootstrapped and homegrown in J&K. Built by a local who wanted Kashmir to have a soda worth bragging about." } },
+        { "type": "tile", "settings": { "title": "Three flavours, one valley", "body": "Green Apple, Mojito and Watermelon. Each one loud, vibrant, and proudly Kashmiri. Caffeine-free, all fun." } },
+        { "type": "tile", "settings": { "title": "A taste of home to take with you", "body": "Diaspora ordering a piece of home. Tourists taking the valley back in their bags. BlackPeak travels." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

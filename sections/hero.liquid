@@ -1,0 +1,66 @@
+<section class="hero">
+  <div class="container hero__grid">
+    <div>
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h1 class="hero__title display">
+        {{ section.settings.title_1 }}<br>{{ section.settings.title_2 }}
+      </h1>
+      <p class="hero__lede">{{ section.settings.lede }}</p>
+
+      <div class="hero__ctas">
+        {%- if section.settings.cta1_text != blank -%}
+          <a class="btn btn--saffron btn--lg" href="{{ section.settings.cta1_url | default: '#build' }}">{{ section.settings.cta1_text }}</a>
+        {%- endif -%}
+        {%- if section.settings.cta2_text != blank -%}
+          <a class="btn btn--outline btn--lg" href="{{ section.settings.cta2_url | default: '#flavours' }}">{{ section.settings.cta2_text }}</a>
+        {%- endif -%}
+      </div>
+
+      <ul class="hero__badges">
+        {%- for block in section.blocks -%}
+          <li class="chip" {{ block.shopify_attributes }}>{{ block.settings.text }}</li>
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    <div class="hero__stage" aria-hidden="true">
+      <div class="hero__blob"></div>
+      <img class="hero__can theme-apple" src="{{ 'can-green-apple.png' | asset_url }}" alt="" width="821" height="1100" loading="eager" fetchpriority="high">
+      <img class="hero__can hero__stage--mid theme-mojito" src="{{ 'can-mojito.png' | asset_url }}" alt="" width="821" height="1100" loading="eager">
+      <img class="hero__can theme-watermelon" src="{{ 'can-watermelon.png' | asset_url }}" alt="" width="821" height="1100" loading="eager">
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Kashmir's own soda" },
+    { "type": "text", "id": "title_1", "label": "Title line 1", "default": "Cold country soda" },
+    { "type": "text", "id": "title_2", "label": "Title line 2", "default": "Bold flavour, bold fizz." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Green Apple, Mojito, Watermelon — the whole valley in a can. Pick your three, mix your pack, and take a little Kashmir wherever you go. Caffeine-free. Bold all the way." },
+    { "type": "text", "id": "cta1_text", "label": "Primary CTA", "default": "Build your pack" },
+    { "type": "url", "id": "cta1_url", "label": "Primary CTA link" },
+    { "type": "text", "id": "cta2_text", "label": "Secondary CTA", "default": "Meet the flavours" },
+    { "type": "url", "id": "cta2_url", "label": "Secondary CTA link" }
+  ],
+  "blocks": [
+    { "type": "badge", "name": "Trust chip", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Made in Kashmir" } ] }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Hero",
+      "blocks": [
+        { "type": "badge", "settings": { "text": "3 bold flavours" } },
+        { "type": "badge", "settings": { "text": "Made in Kashmir" } },
+        { "type": "badge", "settings": { "text": "Caffeine-free" } },
+        { "type": "badge", "settings": { "text": "Bold fizz" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

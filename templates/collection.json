@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": { "type": "main-collection", "settings": {} },
+    "news": {
+      "type": "newsletter",
+      "blocks": {
+        "n1": { "type": "perk", "settings": { "title": "First dibs on drops", "body": "Know before anyone else when a new small-batch run lands." } },
+        "n2": { "type": "perk", "settings": { "title": "Never miss a gift", "body": "Eid, Diwali, birthdays — we'll nudge you in time to send a box." } },
+        "n3": { "type": "perk", "settings": { "title": "Valley-only surprises", "body": "Limited drops, café sightings, and the occasional treat for the list." } }
+      },
+      "block_order": ["n1", "n2", "n3"],
+      "settings": {}
+    }
+  },
+  "order": ["main", "news"]
+}

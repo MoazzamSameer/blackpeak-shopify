@@ -1,0 +1,57 @@
+{%- comment -%}
+  Cart drawer ("Your box").
+  Checkout is a NATIVE form POST to /cart with name="checkout" — the canonical
+  Shopify checkout trigger. It works even if JavaScript never runs.
+  The drawer is server-rendered with the current cart so it is correct on first paint.
+{%- endcomment -%}
+
+<div class="drawer-overlay" id="DrawerOverlay" hidden></div>
+
+<aside class="drawer" id="CartDrawer" aria-label="Your box" aria-modal="true" role="dialog" aria-hidden="true">
+  <div class="drawer__head">
+    <h3>Your box</h3>
+    <button class="btn btn--ghost" type="button" data-cart-close aria-label="Close your box">Close ✕</button>
+  </div>
+
+  <div class="drawer__items" data-drawer-items>
+    {%- if cart.item_count > 0 -%}
+      {%- for item in cart.items -%}
+        <div class="line">
+          {%- if item.image -%}
+            <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.product.title | escape }}" width="60" height="60" loading="lazy">
+          {%- else -%}
+            <div></div>
+          {%- endif -%}
+          <div>
+            <div class="line__name">
+              {{ item.product.title }}
+              {%- unless item.variant.title contains 'Default' %} · {{ item.variant.title }}{% endunless -%}
+            </div>
+            {%- for p in item.properties -%}
+              {%- unless p.first == blank or p.last == blank or p.first contains '_' -%}
+                <div class="line__prop">{{ p.first }}: {{ p.last }}</div>
+              {%- endunless -%}
+            {%- endfor -%}
+            <div class="line__price">{{ item.quantity }} × {{ item.final_price | money }}</div>
+            <a class="line__remove" href="{{ item.url_to_remove }}" data-line-remove data-key="{{ item.key }}">Remove</a>
+          </div>
+          <div class="line__price">{{ item.final_line_price | money }}</div>
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <div class="drawer__empty">{{ 'general.cart.empty' | t }}</div>
+    {%- endif -%}
+  </div>
+
+  <div class="drawer__foot" data-drawer-foot {% if cart.item_count == 0 %}style="display:none"{% endif %}>
+    <div class="drawer__subtotal">
+      <span>Subtotal</span>
+      <span data-subtotal>{{ cart.total_price | money }}</span>
+    </div>
+    <form action="{{ routes.cart_url }}" method="post" novalidate>
+      <button type="submit" name="checkout" class="btn btn--saffron btn--block btn--lg">Checkout</button>
+    </form>
+    <button class="btn btn--ghost btn--block" type="button" data-cart-close style="margin-top:8px">Keep shopping</button>
+    <a class="btn btn--ghost btn--block" href="{{ routes.cart_url }}" style="margin-top:8px">View full box</a>
+  </div>
+</aside>

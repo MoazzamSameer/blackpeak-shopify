@@ -1,0 +1,62 @@
+<section class="section news">
+  <div class="container news__grid">
+    <div>
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="h2 display">{{ section.settings.title }}</h2>
+      <p class="lede">{{ section.settings.body }}</p>
+
+      {%- form 'customer', class: 'news__form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="is-hidden" for="NewsEmail">Email</label>
+        <input id="NewsEmail" type="email" name="contact[email]" placeholder="you@email.com" required aria-label="Email address">
+        <button type="submit" class="btn btn--saffron btn--lg">{{ section.settings.button }}</button>
+        {%- if form.posted_successfully? -%}
+          <p class="muted mt-2">Welcome to the valley — check your inbox.</p>
+        {%- endif -%}
+      {%- endform -%}
+
+      <p class="muted mt-2">{{ section.settings.fine }}</p>
+    </div>
+
+    <ul class="news__tiles">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }}>
+          <strong>{{ block.settings.title }}</strong> — {{ block.settings.body }}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Join the valley" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Join the valley. Get ₹50 off your first box." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Kashmir's own soda, straight to your inbox. Early access to limited batches, first dibs on gifting season, and the odd valley surprise. No spam, just fizz." },
+    { "type": "text", "id": "button", "label": "Button", "default": "Join the valley" },
+    { "type": "textarea", "id": "fine", "label": "Fine print", "default": "₹50 off your first box · use code KASHMIR50 at checkout · unsubscribe anytime." }
+  ],
+  "blocks": [
+    {
+      "type": "perk", "name": "Perk",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "First dibs on drops" },
+        { "type": "textarea", "id": "body", "label": "Body" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Newsletter",
+      "blocks": [
+        { "type": "perk", "settings": { "title": "First dibs on drops", "body": "Know before anyone else when a new small-batch run lands." } },
+        { "type": "perk", "settings": { "title": "Never miss a gift", "body": "Eid, Diwali, birthdays — we'll nudge you in time to send a box." } },
+        { "type": "perk", "settings": { "title": "Valley-only surprises", "body": "Limited drops, café sightings, and the occasional treat for the list." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

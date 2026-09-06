@@ -1,0 +1,82 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "b1": { "type": "badge", "settings": { "text": "3 bold flavours" } },
+        "b2": { "type": "badge", "settings": { "text": "Made in Kashmir" } },
+        "b3": { "type": "badge", "settings": { "text": "Caffeine-free" } },
+        "b4": { "type": "badge", "settings": { "text": "Bold fizz" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {}
+    },
+    "flavours": {
+      "type": "flavors-grid",
+      "blocks": {
+        "f1": { "type": "flavour", "settings": { "name": "Green Apple 12 PACK", "desc": "Crisp & loud", "theme": "apple", "fallback_image": "can-green-apple.png" } },
+        "f2": { "type": "flavour", "settings": { "name": "Mojito 12 Pack", "desc": "Cool & cheeky", "tag": "Non-alcoholic", "theme": "mojito", "fallback_image": "can-mojito.png" } },
+        "f3": { "type": "flavour", "settings": { "name": "Watermelon 12 PACK", "desc": "Big & bold", "theme": "watermelon", "fallback_image": "can-watermelon.png" } }
+      },
+      "block_order": ["f1", "f2", "f3"],
+      "settings": {}
+    },
+    "build": { "type": "build-your-own", "settings": {} },
+    "why": {
+      "type": "why-blackpeak",
+      "blocks": {
+        "w1": { "type": "tile", "settings": { "icon": "🏔️", "title": "Made in Kashmir", "body": "Brewed and canned in the valley by a local J&K founder. Not 'inspired by' Kashmir — made in it. A taste of home for the diaspora, a souvenir you can sip for everyone visiting." } },
+        "w2": { "type": "tile", "settings": { "title": "Three bold flavours", "body": "Green Apple that's crisp and loud. Mojito that's cool and cheeky (and non-alcoholic). Watermelon that's big and summer-bright. One valley, three moods." } },
+        "w3": { "type": "tile", "settings": { "title": "Caffeine-free, any-time", "body": "Caffeine-free and full of bold bubbles — made for the picnic at noon, the houseboat at sunset, and the long drive home." } },
+        "w4": { "type": "tile", "settings": { "title": "Slim, giftable, ready to travel", "body": "300 ml slim cans that slide into a cooler, a bag, or a gift box. The 12-can box ships across India as a taste of Kashmir." } }
+      },
+      "block_order": ["w1", "w2", "w3", "w4"],
+      "settings": {}
+    },
+    "story": {
+      "type": "story",
+      "blocks": {
+        "s1": { "type": "tile", "settings": { "title": "Made in Kashmir", "body": "Made right here in the valley — small batches, big flavour. This isn't soda that visits Kashmir. It's from it." } },
+        "s2": { "type": "tile", "settings": { "title": "One local founder", "body": "Bootstrapped and homegrown in J&K. Built by a local who wanted Kashmir to have a soda worth bragging about." } },
+        "s3": { "type": "tile", "settings": { "title": "Three flavours, one valley", "body": "Green Apple, Mojito and Watermelon. Each one loud, vibrant, and proudly Kashmiri. Caffeine-free, all fun." } },
+        "s4": { "type": "tile", "settings": { "title": "A taste of home to take with you", "body": "Diaspora ordering a piece of home. Tourists taking the valley back in their bags. BlackPeak travels." } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {}
+    },
+    "proof": {
+      "type": "social-proof",
+      "blocks": {
+        "r1": { "type": "review", "settings": { "headline": "Tastes like home in a can.", "quote": "Tastes like home in a can.", "author": "Verified buyer" } },
+        "r2": { "type": "review", "settings": { "headline": "I love the packaging", "quote": "I love the packaging. I haven’t seen designs like these ever before.", "author": "— Neha" } },
+        "r3": { "type": "review", "settings": { "headline": "Tastes better than others", "quote": "Im proud that talent like this is emerging in kashmir. I have tried all three flavours and they taste better than other brands selling mojitos, watermelon is my personal favourite.", "author": "— Seerat" } }
+      },
+      "block_order": ["r1", "r2", "r3"],
+      "settings": {}
+    },
+    "news": {
+      "type": "newsletter",
+      "blocks": {
+        "n1": { "type": "perk", "settings": { "title": "First dibs on drops", "body": "Know before anyone else when a new small-batch run lands." } },
+        "n2": { "type": "perk", "settings": { "title": "Never miss a gift", "body": "Eid, Diwali, birthdays — we'll nudge you in time to send a box." } },
+        "n3": { "type": "perk", "settings": { "title": "Valley-only surprises", "body": "Limited drops, café sightings, and the occasional treat for the list." } }
+      },
+      "block_order": ["n1", "n2", "n3"],
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "q": "What is BlackPeak?", "a": "<p>Kashmir's own craft soda — bold flavour, bold fizz, made in Kashmir. Three flavours, 300 ml slim cans, caffeine-free. Bootstrapped and built in the valley by a local founder.</p>" } },
+        "q2": { "type": "qa", "settings": { "q": "What are the three flavours?", "a": "<p>Green Apple — crisp and loud. Mojito — cool and cheeky (non-alcoholic). Watermelon — big and bold. Green Apple for the picnic, Mojito for the houseboat, Watermelon for the drive. Can't pick? Build a box with all three.</p>" } },
+        "q3": { "type": "qa", "settings": { "q": "Is BlackPeak caffeine-free?", "a": "<p>Yes — all three flavours are caffeine-free. Order it morning, noon, or late on the shikara. The only buzz here is the fizz.</p>" } },
+        "q4": { "type": "qa", "settings": { "q": "Is the Mojito alcoholic?", "a": "<p>Nope. Our Mojito is non-alcoholic — all the cool, cheeky mint-and-lime fun, zero alcohol.</p>" } },
+        "q5": { "type": "qa", "settings": { "q": "Where do you deliver?", "a": "<p>We ship across India — whether you're in Srinagar or sending a box to family three states away. Tourists: order before you leave and take Kashmir home. Made in small batches in Kashmir, packed and posted with care.</p>" } },
+        "q6": { "type": "qa", "settings": { "q": "How do the multipacks work?", "a": "<p>Two ways to buy: a 12-can box of a single flavour at ₹600, or Build-Your-Own at ₹660 — mix Green Apple, Mojito and Watermelon across 12 cans, or tap 'All 3, evenly' or 'Surprise me'. Ships across India.</p>" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6"],
+      "settings": {}
+    }
+  },
+  "order": ["hero", "flavours", "build", "why", "story", "proof", "news", "faq"]
+}

@@ -1,0 +1,26 @@
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h1 class="h1 display">{{ blog.title }}</h1>
+    </div>
+    {%- paginate blog.articles by 12 -%}
+      <div class="coll__grid">
+        {%- for article in blog.articles -%}
+          <article class="flavor-card">
+            {%- if article.image -%}
+              <a class="flavor-card__can" href="{{ article.url }}">
+                <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.title | escape }}"
+                     width="600" height="{{ 600 | divided_by: article.image.aspect_ratio | round }}" loading="lazy">
+              </a>
+            {%- endif -%}
+            <h3 class="flavor-card__name"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+            <p class="muted">{{ article.excerpt_or_content | strip_html | truncate: 120 }}</p>
+          </article>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <div class="text-center mt-2">{{ paginate | default_pagination }}</div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>

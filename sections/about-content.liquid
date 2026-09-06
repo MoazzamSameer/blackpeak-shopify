@@ -1,0 +1,67 @@
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 class="h1 display">{{ section.settings.title }}</h1>
+      <p class="lede">{{ section.settings.lede }}</p>
+    </div>
+
+    <div class="story__body">
+      <p>{{ section.settings.p1 }}</p>
+      <p>{{ section.settings.p2 }}</p>
+      <p>{{ section.settings.p3 }}</p>
+    </div>
+
+    <div class="story__tiles">
+      {%- for block in section.blocks -%}
+        <div class="feature-card reveal" {{ block.shopify_attributes }}>
+          <h3 class="h3">{{ block.settings.title }}</h3>
+          <p class="muted">{{ block.settings.body }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <p class="text-center mt-2">
+        <a class="btn btn--saffron btn--lg" href="{{ section.settings.cta_url | default: '/#build' }}">{{ section.settings.cta_text }}</a>
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About content",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our story" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Kashmir. Bold. Fun." },
+    { "type": "textarea", "id": "lede", "label": "Lede", "default": "Most great sodas come from somewhere far away. Ours comes from here." },
+    { "type": "textarea", "id": "p1", "label": "Paragraph 1", "default": "BlackPeak started with a simple idea: Kashmir deserved a soda of its own. Not a flavour borrowed from somewhere else, not a label flown in from across the country — a bold, fizzy, unapologetically fun drink made right here in the valley." },
+    { "type": "textarea", "id": "p2", "label": "Paragraph 2", "default": "So we built one. Green Apple that's crisp and loud. Mojito that's cool and cheeky (and non-alcoholic). Watermelon that's big and bold. Three flavours, three personalities, all caffeine-free, all in slim cans that fit your hand on a houseboat, a road trip, or a rooftop at golden hour." },
+    { "type": "textarea", "id": "p3", "label": "Paragraph 3", "default": "We're bootstrapped, founder-run, and proudly local to J&K. Pop the tab. Hear the fizz. That's the valley, saying hello." },
+    { "type": "text", "id": "cta_text", "label": "CTA", "default": "Build Your Box" },
+    { "type": "url", "id": "cta_url", "label": "CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "tile", "name": "Tile",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "body", "label": "Body" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "About content",
+      "blocks": [
+        { "type": "tile", "settings": { "title": "Made in Kashmir", "body": "Made in the valley, in small batches, by people from here. The place is the point." } },
+        { "type": "tile", "settings": { "title": "Bold by design", "body": "Big fizz, bigger personality. Green Apple crisp and loud, Mojito cool and cheeky, Watermelon big and bold." } },
+        { "type": "tile", "settings": { "title": "Built to be fun", "body": "Caffeine-free, slim-can, share-it-around fun. Made for picnics, houseboats and drives." } },
+        { "type": "tile", "settings": { "title": "Founder-run and local", "body": "Bootstrapped from J&K by a local founder who wanted Kashmir to have a soda worth bragging about." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

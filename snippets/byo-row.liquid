@@ -1,0 +1,23 @@
+{%- comment -%}
+  One flavour row in the Build Your Own box.
+  Params: product (object, optional), name (string), theme (apple|mojito|watermelon), fallback (asset filename)
+{%- endcomment -%}
+<div class="byo-row theme-{{ theme }}" data-byo-row data-byo-name="{{ name | escape }}">
+  <div class="byo-row__img">
+    {%- if product != blank and product.featured_image != blank -%}
+      <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ name | escape }}"
+           width="200" height="{{ 200 | divided_by: product.featured_image.aspect_ratio | round }}" loading="lazy">
+    {%- else -%}
+      <img src="{{ fallback | asset_url }}" alt="{{ name | escape }}" width="200" height="268" loading="lazy">
+    {%- endif -%}
+  </div>
+  <div class="byo-row__meta">
+    <div class="byo-row__name">{{ name }}</div>
+    <div class="muted">300 ml slim can · caffeine-free</div>
+  </div>
+  <div class="stepper">
+    <button type="button" data-byo-minus aria-label="Remove one {{ name | escape }}" disabled>−</button>
+    <span data-byo-qty aria-live="polite">0</span>
+    <button type="button" data-byo-plus aria-label="Add one {{ name | escape }}">+</button>
+  </div>
+</div>

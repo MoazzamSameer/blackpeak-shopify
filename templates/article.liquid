@@ -1,0 +1,14 @@
+<section class="section">
+  <div class="container" style="max-width:820px">
+    <div class="section__head section__head--left">
+      <p class="eyebrow">{{ article.published_at | date: '%B %d, %Y' }}</p>
+      <h1 class="h1 display">{{ article.title }}</h1>
+    </div>
+    {%- if article.image -%}
+      <img src="{{ article.image | image_url: width: 1200 }}" alt="{{ article.title | escape }}"
+           width="1200" height="{{ 1200 | divided_by: article.image.aspect_ratio | round }}" loading="eager">
+    {%- endif -%}
+    <div class="lede mt-2">{{ article.content }}</div>
+    <p class="mt-2"><a class="btn btn--ghost" href="{{ blog.url }}">← {{ blog.title }}</a></p>
+  </div>
+</section>

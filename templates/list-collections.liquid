@@ -1,0 +1,21 @@
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <h1 class="h1 display">Collections</h1>
+    </div>
+    <div class="coll__grid">
+      {%- for collection in collections -%}
+        <a class="flavor-card" href="{{ collection.url }}">
+          {%- if collection.featured_image -%}
+            <span class="flavor-card__can">
+              <img src="{{ collection.featured_image | image_url: width: 500 }}" alt="{{ collection.title | escape }}"
+                   width="500" height="{{ 500 | divided_by: collection.featured_image.aspect_ratio | round }}" loading="lazy">
+            </span>
+          {%- endif -%}
+          <h3 class="flavor-card__name">{{ collection.title }}</h3>
+          <p class="muted">{{ collection.products_count }} product{{ collection.products_count | pluralize: '', 's' }}</p>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>

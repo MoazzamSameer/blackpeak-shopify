@@ -1,0 +1,68 @@
+{%- comment -%}
+  Full cart page. This is the no-JavaScript safety net: a native form that both
+  updates quantities and submits to checkout via <button name="checkout">.
+{%- endcomment -%}
+<section class="section">
+  <div class="container">
+    <div class="section__head section__head--left">
+      <p class="eyebrow">Your box</p>
+      <h1 class="h1 display">{{ section.settings.title }}</h1>
+    </div>
+
+    {%- if cart.item_count == 0 -%}
+      <p class="lede">{{ 'general.cart.empty' | t }}</p>
+      <a class="btn btn--saffron btn--lg" href="{{ routes.all_products_collection_url }}">Shop the flavours</a>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <div class="drawer__items">
+          {%- for item in cart.items -%}
+            <div class="line">
+              {%- if item.image -%}
+                <a href="{{ item.url }}">
+                  <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.product.title | escape }}" width="72" height="72" loading="lazy">
+                </a>
+              {%- else -%}
+                <div></div>
+              {%- endif -%}
+              <div>
+                <div class="line__name"><a href="{{ item.url }}">{{ item.product.title }}</a>
+                  {%- unless item.variant.title contains 'Default' %} · {{ item.variant.title }}{% endunless -%}
+                </div>
+                {%- for p in item.properties -%}
+                  {%- unless p.first == blank or p.last == blank or p.first contains '_' -%}
+                    <div class="line__prop">{{ p.first }}: {{ p.last }}</div>
+                  {%- endunless -%}
+                {%- endfor -%}
+                <div class="line__price">{{ item.final_price | money }} each</div>
+                <label class="is-hidden" for="Qty-{{ forloop.index }}">Quantity</label>
+                <input id="Qty-{{ forloop.index }}" class="pack-opt" type="number" name="updates[]" value="{{ item.quantity }}" min="0" inputmode="numeric">
+                <a class="line__remove" href="{{ item.url_to_remove }}">Remove</a>
+              </div>
+              <div class="line__price">{{ item.final_line_price | money }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="drawer__subtotal mt-2">
+          <span>Subtotal</span>
+          <strong>{{ cart.total_price | money }}</strong>
+        </div>
+        <p class="muted">Taxes and shipping calculated at checkout.</p>
+
+        <div class="flex mt-2">
+          <button type="submit" name="update" class="btn btn--ghost btn--lg">Update box</button>
+          <button type="submit" name="checkout" class="btn btn--saffron btn--lg">Checkout</button>
+        </div>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Your box" }
+  ]
+}
+{% endschema %}
