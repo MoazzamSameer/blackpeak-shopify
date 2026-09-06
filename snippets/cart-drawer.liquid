@@ -28,7 +28,8 @@
               {%- unless item.variant.title contains 'Default' %} · {{ item.variant.title }}{% endunless -%}
             </div>
             {%- for p in item.properties -%}
-              {%- unless p.first == blank or p.last == blank or p.first contains '_' -%}
+              {%- assign pkey = p.first | slice: 0 -%}
+              {%- unless p.first == blank or p.last == blank or pkey == '_' -%}
                 <div class="line__prop">{{ p.first }}: {{ p.last }}</div>
               {%- endunless -%}
             {%- endfor -%}
