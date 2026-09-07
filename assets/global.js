@@ -98,6 +98,7 @@
     on(b, "click", function (e) {
       if (!drawer) return;            // no drawer -> let the link navigate to /cart
       e.preventDefault();
+      e.stopImmediatePropagation();   // keep Shopify's handlers from also firing
       openDrawer();
       refreshCart();
     });
@@ -222,6 +223,11 @@
       var idEl = form.querySelector('[name="id"]');
       if (!idEl || !idEl.value) return;           // let it POST natively
       e.preventDefault();
+      // Shopify's Shop cart-sync / standard-actions scripts bind their own
+      // submit handlers on cart forms. This theme owns the purchase path —
+      // block the duplicate so the line item isn't added twice (which causes
+      // a 422 "already in your cart" and a drawer that looks empty).
+      e.stopImmediatePropagation();
       var qtyEl = form.querySelector('[name="quantity"]');
       var btn = form.querySelector('[type="submit"]');
       if (btn) { btn.dataset.label = btn.textContent; btn.textContent = "Adding…"; btn.disabled = true; }
@@ -348,6 +354,7 @@
       if (total() !== MAX) { e.preventDefault(); return; }
       if (!byoVariant) return;                    // no variant -> native POST/redirect
       e.preventDefault();
+      e.stopImmediatePropagation();               // block Shopify's duplicate submit handler
       if (addBtn) { addBtn.disabled = true; addBtn.textContent = "Adding…"; }
       addItems([{ id: Number(byoVariant), quantity: 1, properties: { "Your mix": mixString() } }])
         .then(refreshCart)
