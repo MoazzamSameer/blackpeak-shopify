@@ -134,7 +134,7 @@
         "w1": {
           "type": "tile",
           "settings": {
-            "icon": "🏔️",
+            "icon": "🏔️]",
             "title": "Made in Kashmir",
             "body": "Brewed and canned in the valley by a local J&K founder. Not 'inspired by' Kashmir — made in it. A taste of home for the diaspora, a souvenir you can sip for everyone visiting."
           }
@@ -221,13 +221,22 @@
         "title": "Born in the valley. Bottled with attitude.",
         "p1": "We didn't start BlackPeak in a boardroom. We started it in Kashmir — the place we're from, the place we're proud of. One local founder, three loud flavours, and a simple idea: the valley deserves a soda that's actually its own.",
         "p2": "Green Apple for the picnic. Mojito for the houseboat. Watermelon for the drive. Three flavours, one valley, in a 300 ml slim can you can hold in one hand and finish with a grin. Bold flavour. Bold fizz. No apologies.",
+        "image": "shopify://shop_images/IMG_8630-removebg-preview_3c041d79-e6e9-4cf3-aa2b-3e591a4e3818.png",
         "cta_text": "Build Your Box",
-        "cta_url": ""
+        "cta_url": "shopify://collections"
       }
     },
     "proof": {
       "type": "social-proof",
       "blocks": {
+        "review_dMH6ag": {
+          "type": "review",
+          "settings": {
+            "headline": "xxx",
+            "quote": "ccc",
+            "author": "Verified buyer"
+          }
+        },
         "r1": {
           "type": "review",
           "settings": {
@@ -251,12 +260,22 @@
             "quote": "Im proud that talent like this is emerging in kashmir. I have tried all three flavours and they taste better than other brands selling mojitos, watermelon is my personal favourite.",
             "author": "— Seerat"
           }
+        },
+        "review_i3MPxr": {
+          "type": "review",
+          "settings": {
+            "headline": "aaa",
+            "quote": "aaa",
+            "author": "Verified buyer"
+          }
         }
       },
       "block_order": [
+        "review_dMH6ag",
         "r1",
         "r2",
-        "r3"
+        "r3",
+        "review_i3MPxr"
       ],
       "settings": {
         "eyebrow": "Loved across the valley",
