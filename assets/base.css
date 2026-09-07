@@ -400,3 +400,20 @@ details.faq__item summary { list-style: none; } details.faq__item summary::-webk
   margin:2px 0 0;
 }
 .drawer__foot .btn + .btn{ margin-top:8px; }
+
+/* -------- Audit fixes -------- */
+/* A closed drawer was still focusable while aria-hidden="true" (ARIA violation, and a
+   keyboard user could reach the invisible Checkout button). visibility removes it from
+   the tab order without breaking the slide transition. */
+.drawer{ visibility: hidden; transition: transform .3s ease, visibility .3s ease; }
+.drawer.open{ visibility: visible; }
+
+/* The mobile sticky buy bar sits translated off-screen until .show is applied; keep it
+   out of the tab order until it is actually visible. */
+.sticky-atc{ visibility: hidden; transition: transform .25s ease, visibility .25s ease; }
+.sticky-atc.show{ visibility: visible; }
+
+/* Build-your-own no-JS mix picker */
+.byo__nojs{ margin: 0 0 12px; }
+.byo__nojs label{ display: block; font-weight: 800; font-size: 14px; margin-bottom: 6px; }
+.byo__nojs select{ width: 100%; }

@@ -49,9 +49,25 @@
           <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-byo-form>
             <input type="hidden" name="id" value="{{ v.id }}">
             <input type="hidden" name="quantity" value="1">
-            <input type="hidden" name="properties[Your mix]" value="" data-byo-mix>
-            <button type="submit" class="btn btn--saffron btn--block btn--lg" data-byo-add disabled>
-              Pick {{ section.settings.pack_size }} more
+            {%- comment -%}
+              No-JS purchase path. Every option below is a valid 12-can mix, so the box is
+              always correct even when the interactive steppers never load. JavaScript hides
+              this control and drives the same field from the steppers instead.
+            {%- endcomment -%}
+            <div class="byo__nojs" data-byo-nojs>
+              <label for="ByoMix">Choose your mix</label>
+              <select id="ByoMix" name="properties[Your mix]" class="pack-opt" data-byo-mix>
+                <option value="Green Apple &#215; 4, Mojito &#215; 4, Watermelon &#215; 4">All 3, evenly (4 / 4 / 4)</option>
+                <option value="Green Apple &#215; 12">All Green Apple (12)</option>
+                <option value="Mojito &#215; 12">All Mojito (12)</option>
+                <option value="Watermelon &#215; 12">All Watermelon (12)</option>
+                <option value="Green Apple &#215; 6, Mojito &#215; 6">Green Apple + Mojito (6 / 6)</option>
+                <option value="Green Apple &#215; 6, Watermelon &#215; 6">Green Apple + Watermelon (6 / 6)</option>
+                <option value="Mojito &#215; 6, Watermelon &#215; 6">Mojito + Watermelon (6 / 6)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn--saffron btn--block btn--lg" data-byo-add>
+              Build my box
             </button>
           </form>
 

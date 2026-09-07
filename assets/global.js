@@ -260,6 +260,9 @@
     var hintEl = $("[data-byo-hint]", byo);
     var addBtn = $("[data-byo-add]", byo);
     var mixField = $("[data-byo-mix]", byo);
+    // JS is running, so replace the native mix picker with the interactive steppers.
+    var nojs = $("[data-byo-nojs]", byo);
+    if (nojs) nojs.style.display = "none";
 
     function total() { return counts.reduce(function (a, b) { return a + b; }, 0); }
 
@@ -291,7 +294,18 @@
         addBtn.disabled = t !== MAX;
         addBtn.textContent = t === MAX ? "Build my box" : "Pick " + (MAX - t) + " more";
       }
-      if (mixField) mixField.value = mixString();
+      if (mixField) {
+        var val = mixString();
+        if (mixField.tagName === "SELECT") {
+          var opt = mixField.querySelector("option[data-custom]");
+          if (!opt) { opt = document.createElement("option"); opt.setAttribute("data-custom", ""); mixField.appendChild(opt); }
+          opt.value = val;
+          opt.textContent = val || "Your mix";
+          opt.selected = true;
+        } else {
+          mixField.value = val;
+        }
+      }
     }
 
     rows.forEach(function (r, i) {
@@ -336,6 +350,19 @@
     });
 
     renderByo();
+  }
+
+  /* ------------------------------- sticky add-to-cart (product page) ----- */
+  var sticky = $(".sticky-atc");
+  if (sticky) {
+    var anchor = $("form[data-product-form]");
+    if (anchor && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { sticky.classList.toggle("show", !en.isIntersecting); });
+      }, { rootMargin: "0px 0px -80px 0px" }).observe(anchor);
+    } else {
+      sticky.classList.add("show");
+    }
   }
 
   /* ------------------------------------------------- reveal on scroll ---- */
