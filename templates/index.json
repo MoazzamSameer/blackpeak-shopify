@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -34,7 +43,16 @@
         "b3",
         "b4"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Kashmir's own soda",
+        "title_1": "Cold country soda",
+        "title_2": "Bold flavour, bold fizz.",
+        "lede": "Green Apple, Mojito, Watermelon — the whole valley in a can. Pick your three, mix your pack, and take a little Kashmir wherever you go. Caffeine-free. Bold all the way.",
+        "cta1_text": "Build your pack",
+        "cta1_url": "",
+        "cta2_text": "Meet the flavours",
+        "cta2_url": ""
+      }
     },
     "flavours": {
       "type": "flavors-grid",
@@ -42,32 +60,37 @@
         "f1": {
           "type": "flavour",
           "settings": {
+            "handle": "green-apple",
+            "product": "green-apple",
             "name": "Green Apple 12 PACK",
             "desc": "Crisp & loud",
+            "tag": "",
             "theme": "apple",
-            "fallback_image": "can-green-apple.png",
-            "handle": "green-apple"
+            "fallback_image": "can-green-apple.png"
           }
         },
         "f2": {
           "type": "flavour",
           "settings": {
+            "handle": "mojito",
+            "product": "mojito",
             "name": "Mojito 12 Pack",
             "desc": "Cool & cheeky",
             "tag": "Non-alcoholic",
             "theme": "mojito",
-            "fallback_image": "can-mojito.png",
-            "handle": "mojito"
+            "fallback_image": "can-mojito.png"
           }
         },
         "f3": {
           "type": "flavour",
           "settings": {
+            "handle": "watermelon",
+            "product": "watermelon",
             "name": "Watermelon 12 PACK",
             "desc": "Big & bold",
+            "tag": "",
             "theme": "watermelon",
-            "fallback_image": "can-watermelon.png",
-            "handle": "watermelon"
+            "fallback_image": "can-watermelon.png"
           }
         }
       },
@@ -76,11 +99,34 @@
         "f2",
         "f3"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "The lineup",
+        "title": "Three flavours. One valley.",
+        "lede": "Kashmir's own soda, in 300 ml slim cans. Pick your favourite, or grab all three.",
+        "foot_text": "Can't choose? Build your box",
+        "foot_url": ""
+      }
     },
     "build": {
       "type": "build-your-own",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Mix & match",
+        "title": "Build your own box. Mix all three.",
+        "lede": "Pick 12 cans across Green Apple, Mojito and Watermelon — your valley, your way.",
+        "byo_handle": "build-your-own",
+        "byo_product": "",
+        "pack_size": 12,
+        "h1": "green-apple",
+        "n1": "",
+        "p1": "",
+        "h2": "mojito",
+        "n2": "",
+        "p2": "",
+        "h3": "watermelon",
+        "n3": "",
+        "p3": "",
+        "note": "12 cans, mix & match — best value at ₹55 a can. Ships across India."
+      }
     },
     "why": {
       "type": "why-blackpeak",
@@ -96,6 +142,7 @@
         "w2": {
           "type": "tile",
           "settings": {
+            "icon": "",
             "title": "Three bold flavours",
             "body": "Green Apple that's crisp and loud. Mojito that's cool and cheeky (and non-alcoholic). Watermelon that's big and summer-bright. One valley, three moods."
           }
@@ -103,6 +150,7 @@
         "w3": {
           "type": "tile",
           "settings": {
+            "icon": "",
             "title": "Caffeine-free, any-time",
             "body": "Caffeine-free and full of bold bubbles — made for the picnic at noon, the houseboat at sunset, and the long drive home."
           }
@@ -110,6 +158,7 @@
         "w4": {
           "type": "tile",
           "settings": {
+            "icon": "",
             "title": "Slim, giftable, ready to travel",
             "body": "300 ml slim cans that slide into a cooler, a bag, or a gift box. The 12-can box ships across India as a taste of Kashmir."
           }
@@ -121,7 +170,13 @@
         "w3",
         "w4"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Why BlackPeak",
+        "title": "Made in Kashmir. Built to be fun.",
+        "lede": "Bold flavour, bold fizz, and a whole valley behind every can.",
+        "cta_text": "Build my box",
+        "cta_url": ""
+      }
     },
     "story": {
       "type": "story",
@@ -161,7 +216,14 @@
         "s3",
         "s4"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Our story",
+        "title": "Born in the valley. Bottled with attitude.",
+        "p1": "We didn't start BlackPeak in a boardroom. We started it in Kashmir — the place we're from, the place we're proud of. One local founder, three loud flavours, and a simple idea: the valley deserves a soda that's actually its own.",
+        "p2": "Green Apple for the picnic. Mojito for the houseboat. Watermelon for the drive. Three flavours, one valley, in a 300 ml slim can you can hold in one hand and finish with a grin. Bold flavour. Bold fizz. No apologies.",
+        "cta_text": "Build Your Box",
+        "cta_url": ""
+      }
     },
     "proof": {
       "type": "social-proof",
@@ -196,7 +258,10 @@
         "r2",
         "r3"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Loved across the valley",
+        "title": "Spotted across the valley."
+      }
     },
     "news": {
       "type": "newsletter",
@@ -228,7 +293,13 @@
         "n2",
         "n3"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Join the valley",
+        "title": "Join the valley. Get ₹50 off your first box.",
+        "body": "Kashmir's own soda, straight to your inbox. Early access to limited batches, first dibs on gifting season, and the odd valley surprise. No spam, just fizz.",
+        "button": "Join the valley",
+        "fine": "₹50 off your first box · use code KASHMIR50 at checkout · unsubscribe anytime."
+      }
     },
     "faq": {
       "type": "faq",
@@ -284,7 +355,13 @@
         "q5",
         "q6"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "FAQ",
+        "title": "Questions? The valley's got answers.",
+        "lede": "Everything you want to know about Kashmir's own soda — flavours, fizz, shipping and gifting.",
+        "cta_text": "Build my box",
+        "cta_url": ""
+      }
     }
   },
   "order": [
