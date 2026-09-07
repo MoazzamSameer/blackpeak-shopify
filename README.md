@@ -40,18 +40,23 @@ There is **no ₹499 gift box**, no singles and no 24-can case. They have been r
 
 ---
 
-## 3. Connect products in the theme editor
+## 3. Connect products — nothing to do
 
-**Customize** the theme, then:
+Products resolve **automatically by handle**. The theme looks for:
 
-- **Flavours grid** (home) → set each of the 3 blocks to its product.
-- **Build your own box** (home) → set **Build-your-own product** to the ₹660 product,
-  and optionally set the 3 flavour products (used for the row thumbnails only).
+| Handle | Used by |
+|---|---|
+| `green-apple` | flavours grid, build-your-own row 1 |
+| `mojito` | flavours grid, build-your-own row 2 |
+| `watermelon` | flavours grid, build-your-own row 3 |
+| `build-your-own` | the ₹660 mixed box |
 
-Until the build-your-own product is connected, that section shows a clear inline notice
-instead of a broken widget.
+As long as those handles exist, the storefront wires itself — no theme-editor
+picking required. Each section still exposes an "Override: product" picker if you
+ever rename a handle.
 
----
+The `/products/build-your-own` page automatically shows the same can picker as the
+homepage (it detects the handle), instead of a plain add-to-cart button.
 
 ## 4. Pages & navigation
 

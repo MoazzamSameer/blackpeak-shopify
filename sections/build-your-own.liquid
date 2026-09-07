@@ -1,11 +1,27 @@
 {%- comment -%}
   Build Your Own 12-can box.
   Commerce model: ONE Shopify product at a fixed price (₹660). The customer's chosen
-  mix is carried as a line item property ("Your mix": "Green Apple × 5, Mojito × 4, …"),
-  because individual cans are not sold as products.
+  mix rides along as a line item property, because single cans are not sold separately.
+
+  Products resolve AUTOMATICALLY by handle, so the section works with no theme-editor
+  wiring. A product picker can still override the handle if the merchant wants.
 {%- endcomment -%}
+
 {%- assign byo = section.settings.byo_product -%}
-{%- assign v = byo.selected_or_first_available_variant -%}
+{%- unless byo.id -%}
+  {%- assign byo = all_products[section.settings.byo_handle] -%}
+{%- endunless -%}
+
+{%- assign a = section.settings.p1 -%}
+{%- unless a.id -%}{%- assign a = all_products[section.settings.h1] -%}{%- endunless -%}
+{%- assign b = section.settings.p2 -%}
+{%- unless b.id -%}{%- assign b = all_products[section.settings.h2] -%}{%- endunless -%}
+{%- assign c = section.settings.p3 -%}
+{%- unless c.id -%}{%- assign c = all_products[section.settings.h3] -%}{%- endunless -%}
+
+{%- assign name1 = section.settings.n1 | default: a.title -%}
+{%- assign name2 = section.settings.n2 | default: b.title -%}
+{%- assign name3 = section.settings.n3 | default: c.title -%}
 
 <section class="section byo" id="build">
   <div class="container">
@@ -15,74 +31,12 @@
       <p class="lede">{{ section.settings.lede }}</p>
     </div>
 
-    {%- if byo != blank and v != blank -%}
-      <div class="byo__grid"
-           data-byo
-           data-byo-max="{{ section.settings.pack_size }}"
-           data-byo-variant="{{ v.id }}"
-           data-byo-price="{{ byo.price }}">
-
-        <div class="byo__panel">
-          <div class="byo__rows">
-            {%- render 'byo-row', product: section.settings.p1, name: section.settings.n1, theme: 'apple', fallback: 'can-green-apple.png' -%}
-            {%- render 'byo-row', product: section.settings.p2, name: section.settings.n2, theme: 'mojito', fallback: 'can-mojito.png' -%}
-            {%- render 'byo-row', product: section.settings.p3, name: section.settings.n3, theme: 'watermelon', fallback: 'can-watermelon.png' -%}
-          </div>
-
-          <div class="byo__presets">
-            <button class="btn btn--ghost" type="button" data-byo-even>All 3, evenly</button>
-            <button class="btn btn--ghost" type="button" data-byo-surprise>Surprise me</button>
-            <button class="btn btn--ghost" type="button" data-byo-reset>Clear</button>
-          </div>
-        </div>
-
-        <aside class="byo__panel">
-          <div class="byo__count" data-byo-count aria-live="polite">0 / {{ section.settings.pack_size }}</div>
-          <div class="byo__bar"><i data-byo-bar style="width:0%"></i></div>
-          <p class="byo__hint" data-byo-hint>Pick {{ section.settings.pack_size }} cans — mix all three.</p>
-
-          <div class="byo__price">
-            <span>Your box</span>
-            <strong data-byo-price-out>{{ 0 | money }}</strong>
-          </div>
-
-          <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-byo-form>
-            <input type="hidden" name="id" value="{{ v.id }}">
-            <input type="hidden" name="quantity" value="1">
-            {%- comment -%}
-              No-JS purchase path. Every option below is a valid 12-can mix, so the box is
-              always correct even when the interactive steppers never load. JavaScript hides
-              this control and drives the same field from the steppers instead.
-            {%- endcomment -%}
-            <div class="byo__nojs" data-byo-nojs>
-              <label for="ByoMix">Choose your mix</label>
-              <select id="ByoMix" name="properties[Your mix]" class="pack-opt" data-byo-mix>
-                <option value="Green Apple &#215; 4, Mojito &#215; 4, Watermelon &#215; 4">All 3, evenly (4 / 4 / 4)</option>
-                <option value="Green Apple &#215; 12">All Green Apple (12)</option>
-                <option value="Mojito &#215; 12">All Mojito (12)</option>
-                <option value="Watermelon &#215; 12">All Watermelon (12)</option>
-                <option value="Green Apple &#215; 6, Mojito &#215; 6">Green Apple + Mojito (6 / 6)</option>
-                <option value="Green Apple &#215; 6, Watermelon &#215; 6">Green Apple + Watermelon (6 / 6)</option>
-                <option value="Mojito &#215; 6, Watermelon &#215; 6">Mojito + Watermelon (6 / 6)</option>
-              </select>
-            </div>
-            <button type="submit" class="btn btn--saffron btn--block btn--lg" data-byo-add>
-              Build my box
-            </button>
-          </form>
-
-          <p class="muted mt-2">{{ section.settings.note }}</p>
-        </aside>
-      </div>
-    {%- else -%}
-      <div class="byo__empty">
-        <p><strong>Build-your-own isn’t connected yet.</strong></p>
-        <p class="muted">
-          Create a product called “Build Your Own 12-Can Box” priced at ₹660 in Shopify admin,
-          then select it in this section’s settings in the theme editor.
-        </p>
-      </div>
-    {%- endif -%}
+    {%- render 'byo-builder',
+        byo: byo,
+        max: section.settings.pack_size,
+        p1: a, p2: b, p3: c,
+        n1: name1, n2: name2, n3: name3,
+        note: section.settings.note -%}
   </div>
 </section>
 
@@ -94,15 +48,19 @@
     { "type": "text", "id": "title", "label": "Title", "default": "Build your own box. Mix all three." },
     { "type": "textarea", "id": "lede", "label": "Lede", "default": "Pick 12 cans across Green Apple, Mojito and Watermelon — your valley, your way." },
     { "type": "header", "content": "Commerce" },
-    { "type": "product", "id": "byo_product", "label": "Build-your-own product (₹660)", "info": "One fixed-price product. The mix is saved as a line item property." },
+    { "type": "text", "id": "byo_handle", "label": "Build-your-own product handle", "default": "build-your-own", "info": "Resolved automatically. Only set the picker below if you want to override it." },
+    { "type": "product", "id": "byo_product", "label": "Override: build-your-own product" },
     { "type": "range", "id": "pack_size", "label": "Cans per box", "min": 6, "max": 24, "step": 6, "default": 12 },
     { "type": "header", "content": "Flavour rows" },
-    { "type": "product", "id": "p1", "label": "Flavour 1 product (image only)" },
-    { "type": "text", "id": "n1", "label": "Flavour 1 name", "default": "Green Apple 12 PACK" },
-    { "type": "product", "id": "p2", "label": "Flavour 2 product (image only)" },
-    { "type": "text", "id": "n2", "label": "Flavour 2 name", "default": "Mojito 12 Pack" },
-    { "type": "product", "id": "p3", "label": "Flavour 3 product (image only)" },
-    { "type": "text", "id": "n3", "label": "Flavour 3 name", "default": "Watermelon 12 PACK" },
+    { "type": "text", "id": "h1", "label": "Flavour 1 handle", "default": "green-apple" },
+    { "type": "text", "id": "n1", "label": "Flavour 1 name" },
+    { "type": "product", "id": "p1", "label": "Override: flavour 1 product" },
+    { "type": "text", "id": "h2", "label": "Flavour 2 handle", "default": "mojito" },
+    { "type": "text", "id": "n2", "label": "Flavour 2 name" },
+    { "type": "product", "id": "p2", "label": "Override: flavour 2 product" },
+    { "type": "text", "id": "h3", "label": "Flavour 3 handle", "default": "watermelon" },
+    { "type": "text", "id": "n3", "label": "Flavour 3 name" },
+    { "type": "product", "id": "p3", "label": "Override: flavour 3 product" },
     { "type": "header", "content": "Footnote" },
     { "type": "textarea", "id": "note", "label": "Note", "default": "12 cans, mix & match — best value at ₹55 a can. Ships across India." }
   ],

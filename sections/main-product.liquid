@@ -1,5 +1,14 @@
 {%- assign v = product.selected_or_first_available_variant -%}
 
+{%- comment -%} Build-Your-Own gets the can picker instead of a plain add-to-cart. {%- endcomment -%}
+{%- assign byo_handle = section.settings.byo_handle | default: 'build-your-own' -%}
+{%- assign is_byo = false -%}
+{%- if product.handle == byo_handle -%}{%- assign is_byo = true -%}{%- endif -%}
+
+{%- assign a = all_products[section.settings.h1] -%}
+{%- assign b = all_products[section.settings.h2] -%}
+{%- assign c = all_products[section.settings.h3] -%}
+
 <section class="section pdp">
   <div class="container">
     <nav class="pdp__breadcrumb" aria-label="Breadcrumb">
@@ -27,24 +36,26 @@
           <div class="lede">{{ product.description }}</div>
         {%- endif -%}
 
-        <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-product-form>
-          {%- if product.variants.size > 1 -%}
-            <label class="is-hidden" for="VariantSelect">Variant</label>
-            <select id="VariantSelect" name="id" class="pack-opt">
-              {%- for variant in product.variants -%}
-                <option value="{{ variant.id }}" {% if variant == v %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>
-                  {{ variant.title }} — {{ variant.price | money }}
-                </option>
-              {%- endfor -%}
-            </select>
-          {%- else -%}
-            <input type="hidden" name="id" value="{{ v.id }}">
-          {%- endif -%}
-          <input type="hidden" name="quantity" value="1">
-          <button type="submit" class="btn btn--saffron btn--block btn--lg" {% unless v.available %}disabled{% endunless %}>
-            {% if v.available %}Add to box{% else %}Sold out{% endif %}
-          </button>
-        </form>
+        {%- unless is_byo -%}
+          <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-product-form>
+            {%- if product.variants.size > 1 -%}
+              <label class="is-hidden" for="VariantSelect">Variant</label>
+              <select id="VariantSelect" name="id" class="pack-opt">
+                {%- for variant in product.variants -%}
+                  <option value="{{ variant.id }}" {% if variant == v %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>
+                    {{ variant.title }} — {{ variant.price | money }}
+                  </option>
+                {%- endfor -%}
+              </select>
+            {%- else -%}
+              <input type="hidden" name="id" value="{{ v.id }}">
+            {%- endif -%}
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit" class="btn btn--saffron btn--block btn--lg" {% unless v.available %}disabled{% endunless %}>
+              {% if v.available %}Add to box{% else %}Sold out{% endif %}
+            </button>
+          </form>
+        {%- endunless -%}
 
         <ul class="pdp__trust">
           <li>✓ Made in Kashmir</li>
@@ -55,6 +66,22 @@
       </div>
     </div>
 
+    {%- if is_byo -%}
+      <div class="byo" style="padding-top:0">
+        <div class="section__head">
+          <p class="eyebrow">{{ section.settings.byo_eyebrow }}</p>
+          <h2 class="h2 display">{{ section.settings.byo_title }}</h2>
+          <p class="lede">{{ section.settings.byo_lede }}</p>
+        </div>
+        {%- render 'byo-builder',
+            byo: product,
+            max: section.settings.pack_size,
+            p1: a, p2: b, p3: c,
+            n1: a.title, n2: b.title, n3: c.title,
+            note: section.settings.byo_note -%}
+      </div>
+    {%- endif -%}
+
     <div class="pdp__tiles">
       {%- for block in section.blocks -%}
         <div class="feature-card" {{ block.shopify_attributes }}>
@@ -64,34 +91,48 @@
       {%- endfor -%}
     </div>
 
-    <div class="pdp__packs">
-      <a class="gift__tile" href="{{ section.settings.byo_url | default: '/#build' }}">
-        <strong>Missing a flavour? Build a box</strong>
-        <span class="muted">Mix all three into a 12-can box.</span>
-      </a>
-    </div>
+    {%- unless is_byo -%}
+      <div class="pdp__packs">
+        <a class="gift__tile" href="{{ section.settings.byo_url | default: '/products/build-your-own' }}">
+          <strong>Missing a flavour? Build a box</strong>
+          <span class="muted">Mix all three into a 12-can box.</span>
+        </a>
+      </div>
+    {%- endunless -%}
   </div>
 </section>
 
-<div class="sticky-atc">
-  <div>
-    <div class="sticky-atc__name">{{ product.title }}</div>
-    <div class="sticky-atc__price">{{ product.price | money }}</div>
+{%- unless is_byo -%}
+  <div class="sticky-atc">
+    <div>
+      <div class="sticky-atc__name">{{ product.title }}</div>
+      <div class="sticky-atc__price">{{ product.price | money }}</div>
+    </div>
+    <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-product-form>
+      <input type="hidden" name="id" value="{{ v.id }}">
+      <input type="hidden" name="quantity" value="1">
+      <button type="submit" class="btn btn--saffron" {% unless v.available %}disabled{% endunless %}>
+        {% if v.available %}Add to box{% else %}Sold out{% endif %}
+      </button>
+    </form>
   </div>
-  <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-product-form>
-    <input type="hidden" name="id" value="{{ v.id }}">
-    <input type="hidden" name="quantity" value="1">
-    <button type="submit" class="btn btn--saffron" {% unless v.available %}disabled{% endunless %}>
-      {% if v.available %}Add to box{% else %}Sold out{% endif %}
-    </button>
-  </form>
-</div>
+{%- endunless -%}
 
 {% schema %}
 {
   "name": "Product",
   "settings": [
-    { "type": "url", "id": "byo_url", "label": "Build-your-own link" }
+    { "type": "url", "id": "byo_url", "label": "Build-your-own link" },
+    { "type": "header", "content": "Build-your-own page" },
+    { "type": "text", "id": "byo_handle", "label": "Build-your-own product handle", "default": "build-your-own", "info": "When the visitor is on this product, the can picker replaces the normal add-to-cart." },
+    { "type": "text", "id": "byo_eyebrow", "label": "Eyebrow", "default": "Mix & match" },
+    { "type": "text", "id": "byo_title", "label": "Title", "default": "Build your own box. Mix all three." },
+    { "type": "textarea", "id": "byo_lede", "label": "Lede", "default": "Pick 12 cans across Green Apple, Mojito and Watermelon — your valley, your way." },
+    { "type": "range", "id": "pack_size", "label": "Cans per box", "min": 6, "max": 24, "step": 6, "default": 12 },
+    { "type": "text", "id": "h1", "label": "Flavour 1 handle", "default": "green-apple" },
+    { "type": "text", "id": "h2", "label": "Flavour 2 handle", "default": "mojito" },
+    { "type": "text", "id": "h3", "label": "Flavour 3 handle", "default": "watermelon" },
+    { "type": "textarea", "id": "byo_note", "label": "Note", "default": "12 cans, mix & match — best value at ₹55 a can. Ships across India." }
   ],
   "blocks": [
     {
@@ -103,16 +144,6 @@
     }
   ],
   "max_blocks": 6,
-  "presets": [
-    {
-      "name": "Product",
-      "blocks": [
-        { "type": "tile", "settings": { "kicker": "300 ML OF KASHMIR", "body": "One slim can. All valley." } },
-        { "type": "tile", "settings": { "kicker": "CAFFEINE-FREE", "body": "Bold without the buzz." } },
-        { "type": "tile", "settings": { "kicker": "3 FLAVOURS, 1 VALLEY", "body": "Green Apple, Mojito, Watermelon." } },
-        { "type": "tile", "settings": { "kicker": "BOLD FIZZ", "body": "Fizz that means it." } }
-      ]
-    }
-  ]
+  "presets": [{ "name": "Product" }]
 }
 {% endschema %}

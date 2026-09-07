@@ -1,0 +1,76 @@
+{%- comment -%}
+  Build-Your-Own can picker.
+  Shared by the homepage section AND the build-your-own product page so both
+  behave identically. Params:
+    byo (product), max (int), p1/p2/p3 (products), n1/n2/n3 (names), note (string)
+{%- endcomment -%}
+{%- assign byov = byo.selected_or_first_available_variant -%}
+
+{%- if byo.id and byov.id -%}
+  <div class="byo__grid"
+       data-byo
+       data-byo-max="{{ max | default: 12 }}"
+       data-byo-variant="{{ byov.id }}"
+       data-byo-price="{{ byo.price }}">
+
+    <div class="byo__panel">
+      <div class="byo__rows">
+        {%- render 'byo-row', product: p1, name: n1, theme: 'apple', fallback: 'can-green-apple.png' -%}
+        {%- render 'byo-row', product: p2, name: n2, theme: 'mojito', fallback: 'can-mojito.png' -%}
+        {%- render 'byo-row', product: p3, name: n3, theme: 'watermelon', fallback: 'can-watermelon.png' -%}
+      </div>
+
+      <div class="byo__presets">
+        <button class="btn btn--ghost" type="button" data-byo-even>All 3, evenly</button>
+        <button class="btn btn--ghost" type="button" data-byo-surprise>Surprise me</button>
+        <button class="btn btn--ghost" type="button" data-byo-reset>Clear</button>
+      </div>
+    </div>
+
+    <aside class="byo__panel">
+      <div class="byo__count" data-byo-count aria-live="polite">0 / {{ max | default: 12 }}</div>
+      <div class="byo__bar"><i data-byo-bar style="width:0%"></i></div>
+      <p class="byo__hint" data-byo-hint>Pick {{ max | default: 12 }} cans — mix all three.</p>
+
+      <div class="byo__price">
+        <span>Your box</span>
+        <strong data-byo-price-out>{{ byo.price | money }}</strong>
+      </div>
+
+      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-byo-form>
+        <input type="hidden" name="id" value="{{ byov.id }}">
+        <input type="hidden" name="quantity" value="1">
+        {%- comment -%}
+          No-JS purchase path: every option is a valid 12-can mix, so the box is always
+          correct even if the steppers never load. JS hides this and drives the same field.
+        {%- endcomment -%}
+        <div class="byo__nojs" data-byo-nojs>
+          <label for="ByoMix">Choose your mix</label>
+          <select id="ByoMix" name="properties[Your mix]" class="pack-opt" data-byo-mix>
+            <option value="Green Apple &#215; 4, Mojito &#215; 4, Watermelon &#215; 4">All 3, evenly (4 / 4 / 4)</option>
+            <option value="Green Apple &#215; 12">All Green Apple (12)</option>
+            <option value="Mojito &#215; 12">All Mojito (12)</option>
+            <option value="Watermelon &#215; 12">All Watermelon (12)</option>
+            <option value="Green Apple &#215; 6, Mojito &#215; 6">Green Apple + Mojito (6 / 6)</option>
+            <option value="Green Apple &#215; 6, Watermelon &#215; 6">Green Apple + Watermelon (6 / 6)</option>
+            <option value="Mojito &#215; 6, Watermelon &#215; 6">Mojito + Watermelon (6 / 6)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn--saffron btn--block btn--lg" data-byo-add>
+          Build my box
+        </button>
+      </form>
+
+      {%- if note != blank -%}
+        <p class="muted mt-2">{{ note }}</p>
+      {%- endif -%}
+    </aside>
+  </div>
+{%- else -%}
+  <div class="byo__empty">
+    <p><strong>Build-your-own isn’t available right now.</strong></p>
+    <p class="muted">
+      Create a product with the handle <code>build-your-own</code> priced at ₹660 in Shopify admin.
+    </p>
+  </div>
+{%- endif -%}
