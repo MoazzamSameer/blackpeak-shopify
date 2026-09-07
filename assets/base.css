@@ -361,8 +361,13 @@ details.faq__item summary { list-style: none; } details.faq__item summary::-webk
 .coll__grid { display:grid; grid-template-columns: repeat(3,1fr); gap: clamp(16px,2vw,26px); }
 
 /* -------- Reveal animation -------- */
-.reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
-.reveal.in { opacity: 1; transform: none; }
+/* Content is VISIBLE by default. The entrance animation is opt-in: global.js adds
+   .js-reveal to <html> only once it is actually executing. If the script is blocked,
+   fails, or never loads, nothing is ever hidden. Accepts both .in and .is-visible. */
+.reveal { opacity: 1; transform: none; }
+.js-reveal .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+.js-reveal .reveal.in,
+.js-reveal .reveal.is-visible { opacity: 1; transform: none; }
 
 /* -------- Utilities -------- */
 .is-hidden { display: none !important; }

@@ -229,14 +229,6 @@
     "proof": {
       "type": "social-proof",
       "blocks": {
-        "review_dMH6ag": {
-          "type": "review",
-          "settings": {
-            "headline": "xxx",
-            "quote": "ccc",
-            "author": "Verified buyer"
-          }
-        },
         "r1": {
           "type": "review",
           "settings": {
@@ -260,22 +252,12 @@
             "quote": "Im proud that talent like this is emerging in kashmir. I have tried all three flavours and they taste better than other brands selling mojitos, watermelon is my personal favourite.",
             "author": "— Seerat"
           }
-        },
-        "review_i3MPxr": {
-          "type": "review",
-          "settings": {
-            "headline": "aaa",
-            "quote": "aaa",
-            "author": "Verified buyer"
-          }
         }
       },
       "block_order": [
-        "review_dMH6ag",
         "r1",
         "r2",
-        "r3",
-        "review_i3MPxr"
+        "r3"
       ],
       "settings": {
         "eyebrow": "Loved across the valley",

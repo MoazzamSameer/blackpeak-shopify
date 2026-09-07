@@ -18,10 +18,17 @@
   var MONEY = BP.moneyFormat || "Rs. {{amount}}";
   var STR = BP.strings || {};
 
+  // Shopify's routes.*_url are the FORM endpoints (/cart/add). The AJAX API needs
+  // the .js variants (/cart/add.js). Normalise no matter what the layout emitted —
+  // posting JSON to /cart/add returns an HTML page and breaks add-to-cart.
+  function ajaxUrl(u, fallback) {
+    u = u || fallback;
+    return /\.js(\?|$)/.test(u) ? u : u + ".js";
+  }
   var CART_URL = routes.cart || "/cart";
-  var CART_ADD = routes.cart_add || "/cart/add.js";
-  var CART_CHANGE = routes.cart_change || "/cart/change.js";
-  var CART_JSON = routes.cart_json || "/cart.js";
+  var CART_ADD = ajaxUrl(routes.cart_add, "/cart/add");
+  var CART_CHANGE = ajaxUrl(routes.cart_change, "/cart/change");
+  var CART_JSON = ajaxUrl(routes.cart_json, "/cart");
 
   function $(s, r) { return (r || document).querySelector(s); }
   function $all(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
@@ -238,9 +245,12 @@
           if (btn) flash(btn, "Added ✓", 1200);
         })
         .catch(function (err) {
-          var msg = (err && (err.description || err.message)) || "Sold out";
-          if (btn) { btn.textContent = msg.slice(0, 24); flash(btn, msg.slice(0, 24), 2200); }
-          else { form.submit(); }
+          var msg = (err && (err.description || err.message)) || "Could not add";
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = msg.slice(0, 40);
+            flash(btn, msg.slice(0, 40), 3200);
+          }
         });
     });
   });
@@ -346,7 +356,11 @@
           counts = rows.map(function () { return 0; });
           renderByo();
         })
-        .catch(function () { byoForm.submit(); });
+        .catch(function (err) {
+          var msg = (err && (err.description || err.message)) || "Could not add";
+          if (addBtn) { addBtn.disabled = false; addBtn.textContent = msg.slice(0, 40); }
+          setTimeout(renderByo, 3200);
+        });
     });
 
     renderByo();
@@ -366,15 +380,21 @@
   }
 
   /* ------------------------------------------------- reveal on scroll ---- */
-  if ("IntersectionObserver" in window) {
+  var reveals = $all(".reveal");
+  function show(el) { el.classList.add("in"); el.classList.add("is-visible"); }
+  if (reveals.length && "IntersectionObserver" in window) {
+    // Only now do we allow CSS to hide anything — this script is demonstrably running.
+    document.documentElement.classList.add("js-reveal");
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add("is-visible"); io.unobserve(en.target); }
+        if (en.isIntersecting) { show(en.target); io.unobserve(en.target); }
       });
     }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
-    $all(".reveal").forEach(function (el) { io.observe(el); });
+    reveals.forEach(function (el) { io.observe(el); });
+    // Belt and braces: if anything goes wrong, reveal everything shortly after load.
+    setTimeout(function () { reveals.forEach(show); }, 2500);
   } else {
-    $all(".reveal").forEach(function (el) { el.classList.add("is-visible"); });
+    reveals.forEach(show);
   }
 
   /* Keep the header count truthful on back/forward cache restores */
